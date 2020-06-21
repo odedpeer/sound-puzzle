@@ -1,0 +1,87 @@
+<html>
+<head>
+  <link rel="stylesheet" href="./media.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"
+  />
+</head>
+<body class="pa2">
+<div class="reference pb2 bb">
+  <h1>
+    Reference song
+  </h1>
+  <div class="flex">
+    <audio id="player" controls class="pr2">
+      <source
+        src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets.mp3"
+        type="audio/wav"
+      />
+    </audio>
+    <button class="bg-blue" onclick="stop()">Reset</button>
+  </div>
+  <div class="flex">
+    <script>
+      for (let i = 0 ; i < 8 ; i++) {
+        document.write(`<img src="muppets-${i}.png" width="30%" height="30%">`);
+      }
+    </script>
+  </div>
+</div>
+
+<div class="solution">
+  <h1>
+    Solution
+  </h1>
+  <div id="playlist" class="flex pb2 bb">
+    <script>
+      for (let i = 0 ; i < 8 ; i++) {
+        document.write(`
+        <div
+          id="selection${i}"
+          class="droppoint"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+        `);
+      }
+    </script>
+  </div>
+</div>
+
+<div class="parts">
+  <h1>
+    Parts
+  </h1>
+  <div
+    id="splits"
+    class="flex mt2 bg-light-green"
+    ondrop="drop(event)"
+    ondragover="allowDrop(event)"
+  >
+    <script>
+      // shuffle splits
+      let indexes = [];
+      for (let i = 0 ; i < 8 ; i++) {
+        indexes.push(i);
+      }
+      let shuffle = [];
+      for (let i = 0 ; i < 8 ; i++) {
+        shuffle.push(indexes.splice(Math.random() * indexes.length, 1)[0]);
+      }
+      for (let i = 0 ; i < 8 ; i++) {
+        const index = shuffle[i];
+        document.write(`
+        <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
+          <img src="muppets-${index}.png">
+          <span>${index}</span>
+          <button onclick="playSplit(${index})">&rtri;</button>
+        </div>
+        `);
+      }
+    </script>
+  </div>
+</div>
+<script src="./media.js"></script>
+</body>
+</html>
