@@ -73,7 +73,7 @@
         const index = shuffle[i];
         document.write(`
         <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
-          <img src="muppets-${index}.png">
+          <img src="muppets-${index}.png" draggable="false">
           <span>${index}</span>
           <button onclick="playSplit(${index})">&rtri;</button>
         </div>
