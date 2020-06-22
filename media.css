@@ -36,3 +36,8 @@ body {
 .dragging .droppoint:hover {
   border: 10px solid red;
 }
+
+.hint {
+  float: left;
+  display: none;
+}

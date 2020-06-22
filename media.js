@@ -156,6 +156,18 @@ for (let i = 0; i < 8; i++) {
   );
 }
 
+function toggleHint() {
+  let hintElements = document.querySelectorAll(".hint");
+
+  for (let i = 0; i < hintElements.length; i++) {
+    if (!hintElements[i].style.display) {
+      hintElements[i].style.display = "block";
+    } else {
+      hintElements[i].style.display = "";
+    }
+  }
+}
+
 // Drag & drop effects
 document.addEventListener(
   "dragstart",
