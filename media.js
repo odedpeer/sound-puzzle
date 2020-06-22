@@ -1,6 +1,7 @@
 let selection = [];
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let source;
+let numberOfSplits = 8;
 
 function canDrop(ev) {
   return ev.target.className === "droppoint" || ev.target.id === "splits";
@@ -16,6 +17,15 @@ function drag(ev) {
   ev.dataTransfer.setData("splitId", ev.target.id);
 }
 
+function verifyWinning() {
+  for (let i = 0; i < numberOfSplits; i++) {
+    if (selection[i] !== i.toString()) {
+      return;
+    }
+  }
+  document.getElementById("announcement").innerText = "You Won!";
+}
+
 function drop(ev) {
   const splitId = ev.dataTransfer.getData("splitId");
   if (canDrop(ev)) {
@@ -23,6 +33,7 @@ function drop(ev) {
     ev.target.appendChild(document.getElementById(splitId));
     if (ev.target.className === "droppoint") {
       selection[parseInt(ev.target.id.substring("selection".length))] = splitId;
+      verifyWinning();
     } else {
       // remove the split from selection
       for (let i = 0; i < selection.length; i++) {
@@ -120,7 +131,7 @@ function playSplit(index) {
 }
 
 function resetAllSplitBackgrounds() {
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < numberOfSplits; i++) {
     document.getElementById(i.toString()).className = "split";
   }
 }
@@ -149,7 +160,7 @@ function fetchSplit(splitName, url) {
 }
 
 const splitarrays = {};
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < numberOfSplits; i++) {
   fetchSplit(
     `muppets-${i}.mp3`,
     `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets-${i}.mp3`

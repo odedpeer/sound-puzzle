@@ -41,3 +41,10 @@ body {
   float: left;
   display: none;
 }
+
+#announcement {
+  margin-top: 30px;
+  font-size: 60px;
+  font-family: monospace;
+  color: brown;
+}

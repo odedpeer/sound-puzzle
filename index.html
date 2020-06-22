@@ -24,7 +24,7 @@
       </div>
       <div class="flex">
         <script>
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < numberOfSplits; i++) {
             document.write(
               `<img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets-${i}.png" width="30%" height="30%">`
             );
@@ -39,7 +39,7 @@
       </h1>
       <div class="flex pb2 bb" id="playlist">
         <script>
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < numberOfSplits; i++) {
             document.write(`
         <div
           id="selection${i}"
@@ -66,14 +66,14 @@
         <script>
           // shuffle splits
           let indexes = [];
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < numberOfSplits; i++) {
             indexes.push(i);
           }
           let shuffle = [];
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < numberOfSplits; i++) {
             shuffle.push(indexes.splice(Math.random() * indexes.length, 1)[0]);
           }
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < numberOfSplits; i++) {
             const index = shuffle[i];
             document.write(`
         <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
@@ -92,6 +92,8 @@
 
     <div>
       <button class="bg-blue" onclick="toggleHint()">Toggle Hints</button>
+    </div>
+    <div id="announcement">
     </div>
   </body>
 </html>
