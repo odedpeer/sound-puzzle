@@ -34,5 +34,5 @@ body {
 }
 
 .dragging .droppoint:hover {
-  border: 10px solid red
+  border: 10px solid red;
 }

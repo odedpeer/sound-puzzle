@@ -60,7 +60,7 @@ function concatBuffer(_buffers) {
     totalDuration += _buffers[a].duration; // Get the total duration of the new buffer when every buffer will be added/concatenated
   }
 
-  var numberOfChannels = channels.reduce(function(a, b) {
+  var numberOfChannels = channels.reduce(function (a, b) {
     return Math.min(a, b);
   });
   // The lowest value contained in the array channels
@@ -109,9 +109,9 @@ function playSplit(index) {
     splitsToPlayIndexes.push(index);
   }
 
-  return Promise.all(splitsToPlay.map(splitName => splitarrays[splitName]))
+  return Promise.all(splitsToPlay.map((splitName) => splitarrays[splitName]))
     .then(concatBuffer)
-    .then(decodedData => {
+    .then((decodedData) => {
       source.buffer = decodedData;
       source.connect(audioCtx.destination);
       source.start();
@@ -138,14 +138,14 @@ function toggleSplitBgColor(indexes) {
 
 function fetchSplit(splitName, url) {
   return fetch(url)
-    .then(function(response) {
+    .then(function (response) {
       if (!response.ok) {
         throw new Error("HTTP error, status = " + response.status);
       }
       return response.arrayBuffer();
     })
-    .then(buf => audioCtx.decodeAudioData(buf))
-    .then(arr => (splitarrays[splitName] = arr));
+    .then((buf) => audioCtx.decodeAudioData(buf))
+    .then((arr) => (splitarrays[splitName] = arr));
 }
 
 const splitarrays = {};
@@ -157,30 +157,64 @@ for (let i = 0; i < 8; i++) {
 }
 
 // Drag & drop effects
-document.addEventListener("dragstart", function(event) {
-  // store a ref. on the dragged elem
-  dragged = event.target;
-  // make it half transparent
-  event.target.style.opacity = .5;
-}, false);
+document.addEventListener(
+  "dragstart",
+  function (event) {
+    // store a ref. on the dragged elem
+    const dragged = event.target;
+    // make it half transparent
+    event.target.style.opacity = 0.5;
+  },
+  false
+);
 
-document.addEventListener("dragend", function(event) {
-  // reset the transparency
-  event.target.style.opacity = "";
-}, false);
+document.addEventListener(
+  "touchstart",
+  function (event) {
+    // store a ref. on the dragged elem
+    const dragged = event.target;
+    // make it half transparent
+    event.target.style.opacity = 0.5;
+  },
+  false
+);
 
-document.addEventListener("dragenter", function(event) {
-  // highlight potential drop target when the draggable element enters it
-  if (event.target.className == "droppoint") {
-    event.target.style.background = "purple";
-  }
+document.addEventListener(
+  "dragend",
+  function (event) {
+    // reset the transparency
+    event.target.style.opacity = "";
+  },
+  false
+);
 
-}, false);
+document.addEventListener(
+  "touchend",
+  function (event) {
+    // reset the transparency
+    event.target.style.opacity = "";
+  },
+  false
+);
 
-document.addEventListener("dragleave", function(event) {
-  // reset background of potential drop target when the draggable element leaves it
-  if (event.target.className == "droppoint") {
-    event.target.style.background = "";
-  }
+document.addEventListener(
+  "dragenter",
+  function (event) {
+    // highlight potential drop target when the draggable element enters it
+    if (event.target.className == "droppoint") {
+      event.target.style.background = "purple";
+    }
+  },
+  false
+);
 
-}, false);
+document.addEventListener(
+  "dragleave",
+  function (event) {
+    // reset background of potential drop target when the draggable element leaves it
+    if (event.target.className == "droppoint") {
+      event.target.style.background = "";
+    }
+  },
+  false
+);
