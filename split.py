@@ -23,7 +23,7 @@ def plot(dir, filename, num):
         plt.savefig("%s-%d.%s" % (filename, num, "png"), bbox_inches='tight', pad_inches = 0)
 
 dir = "/Users/opeer/Downloads"
-filename = "muppets"
+filename = "sunscreen"
 extension = "mp3"
 song = AudioSegment.from_mp3("%s/%s.%s" % (dir, filename, extension))
 

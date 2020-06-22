@@ -101,11 +101,11 @@ function playSplit(index) {
   const splitsToPlayIndexes = [];
   for (let i = 0; i < selection.length; i++) {
     if (selection[i] === index.toString()) {
-      splitsToPlay.push(`muppets-${selection[i]}.mp3`);
+      splitsToPlay.push(`sunscreen-${selection[i]}.mp3`);
       splitsToPlayIndexes.push(selection[i]);
       for (let j = i + 1; j < selection.length; j++) {
         if (selection[j]) {
-          splitsToPlay.push(`muppets-${selection[j]}.mp3`);
+          splitsToPlay.push(`sunscreen-${selection[j]}.mp3`);
           splitsToPlayIndexes.push(selection[j]);
         } else {
           break;
@@ -116,7 +116,7 @@ function playSplit(index) {
   }
 
   if (splitsToPlay.length === 0) {
-    splitsToPlay.push(`muppets-${index}.mp3`);
+    splitsToPlay.push(`sunscreen-${index}.mp3`);
     splitsToPlayIndexes.push(index);
   }
 
@@ -162,9 +162,21 @@ function fetchSplit(splitName, url) {
 const splitarrays = {};
 for (let i = 0; i < numberOfSplits; i++) {
   fetchSplit(
-    `muppets-${i}.mp3`,
-    `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets-${i}.mp3`
+    `sunscreen-${i}.mp3`,
+    `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${i}.mp3`
   );
+}
+
+function toggleBorder() {
+  let tileElements = document.querySelectorAll(".wav-tile");
+
+  for (let i = 0; i < tileElements.length; i++) {
+    if (!tileElements[i].style.borderWidth) {
+      tileElements[i].style.borderWidth = "1px";
+    } else {
+      tileElements[i].style.borderWidth = "";
+    }
+  }
 }
 
 function toggleHint() {

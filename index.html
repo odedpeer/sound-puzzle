@@ -16,8 +16,8 @@
       <div class="flex">
         <audio class="pr2" controls id="player">
           <source
-            src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets.mp3"
-            type="audio/wav"
+            src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen.mp3?v=1592826506395"
+            type="audio/mp3"
           />
         </audio>
         <button class="bg-blue" onclick="stop()">Reset</button>
@@ -26,7 +26,10 @@
         <script>
           for (let i = 0; i < numberOfSplits; i++) {
             document.write(
-              `<img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets-${i}.png" width="30%" height="30%">`
+              `<img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${i}.png"
+                class="wav-tile"
+                width="35%" height="35%"
+               >`
             );
           }
         </script>
@@ -78,7 +81,7 @@
             document.write(`
         <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
           <div>
-            <img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fmuppets-${index}.png" width="30%" height="30%">
+            <img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${index}.png" width="30%" height="30%">
           </div>
           <div>
             <button onclick="playSplit(${index})"><span class="hint">${index}</span> &rtri;</button>
@@ -90,10 +93,10 @@
       </div>
     </div>
 
-    <div>
-      <button class="bg-blue" onclick="toggleHint()">Toggle Hints</button>
+    <div class="pa2">
+      <button class="bg-green" onclick="toggleBorder()">Toggle Border</button>
+      <button class="bg-green" onclick="toggleHint()">Toggle Hints</button>
     </div>
-    <div id="announcement">
-    </div>
+    <div id="announcement"></div>
   </body>
 </html>
