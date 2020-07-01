@@ -37,7 +37,7 @@ while (cur < song_length):
     splits.append(song[cur : cur + interval])
     cur += interval
 
-splits_to_save_start_index = 6
+splits_to_save_start_index = 0
 number_of_splits_to_save = 10
 for num, split in enumerate(splits[splits_to_save_start_index : splits_to_save_start_index + number_of_splits_to_save], start=0):
     with open("%s/splits/%s-%d.%s" % (dir, filename, num, extension), 'wb') as out_f:

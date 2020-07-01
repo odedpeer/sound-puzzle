@@ -163,7 +163,7 @@ const splitarrays = {};
 for (let i = 0; i < numberOfSplits; i++) {
   fetchSplit(
     `sunscreen-${i}.mp3`,
-    `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${i}.mp3`
+    `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${i}.mp3?v=1592828177327`
   );
 }
 

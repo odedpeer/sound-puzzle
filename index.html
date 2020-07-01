@@ -81,7 +81,10 @@
             document.write(`
         <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
           <div>
-            <img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${index}.png" width="30%" height="30%">
+            <img
+            draggable="false"
+            src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${index}.png"
+            width="30%" height="30%">
           </div>
           <div>
             <button onclick="playSplit(${index})"><span class="hint">${index}</span> &rtri;</button>
