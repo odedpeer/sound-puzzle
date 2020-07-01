@@ -44,7 +44,7 @@ function drop(ev) {
     }
   }
   // reset background of potential drop target when the draggable element leaves it
-  event.target.style.background = "";
+  ev.target.style.background = "";
 }
 
 async function stop() {
@@ -236,7 +236,7 @@ document.addEventListener(
   "dragenter",
   function (event) {
     // highlight potential drop target when the draggable element enters it
-    if (event.target.className == "droppoint") {
+    if (event.target.className == "droppoint" || event.target.id == "splits") {
       event.target.style.background = "purple";
     }
   },
@@ -247,7 +247,7 @@ document.addEventListener(
   "dragleave",
   function (event) {
     // reset background of potential drop target when the draggable element leaves it
-    if (event.target.className == "droppoint") {
+    if (event.target.className == "droppoint" || event.target.id == "splits") {
       event.target.style.background = "";
     }
   },
