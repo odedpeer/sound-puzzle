@@ -17,9 +17,7 @@
         place
       </h3>
       <div>
-        <h3 id="selectedSong"></h3>
         <div><span>Time to solve: </span><span id="timer"></span></div>
-        <h4>Change song</h4>
         <select name="song" onchange="selectSong(this)">
           <script>
             for (const song in songs) {
@@ -31,22 +29,20 @@
             }
           </script>
         </select>
-      </div>
-      <div class="grid-container" id="drawall"></div>
-      <div>
         <input
           class="btn"
           type="button"
           onclick="playAll()"
-          value="Play song &rtri;"
+          value="&rtri;"
         />
         <input
           class="btn"
           type="button"
           onclick="stop()"
-          value="Stop playing &FilledSmallSquare;"
+          value="&FilledSmallSquare;"
         />
       </div>
+      <div class="grid-container" id="drawall"></div>
     </div>
 
     <div class="solution">
@@ -58,7 +54,7 @@
 
     <div class="parts">
       <h1>
-        Parts
+        Sound Bites
       </h1>
       <div
         class="grid-container mt2 bg-light-green"
@@ -69,8 +65,8 @@
     </div>
 
     <div class="hints">
-      <button class="bg-green" onclick="toggleBorder()">Toggle Border</button>
-      <button class="bg-green" onclick="toggleHint()">Toggle Hints</button>
+      <button class="btn" onclick="toggleBorder()">Toggle Border</button>
+      <button class="btn" onclick="toggleHint()">Toggle Hints</button>
     </div>
   </body>
 </html>

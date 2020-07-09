@@ -21,7 +21,6 @@ async function init() {
     document.getElementById("timer").innerText = seconds;
   }, 1000);
 
-  document.getElementById("selectedSong").innerText = songs[songPrefix];
   splitarrays = {};
   selection = [];
   const promises = [];

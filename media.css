@@ -42,6 +42,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: 12vw 12vw 12vw 12vw 12vw 12vw 12vw 12vw;
+  margin-top: 2vw;
 }
 
 img {
@@ -62,9 +63,32 @@ img {
 }
 
 .btn {
-  margin: 3px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 1vw 2vw;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-max-size: 4vw;
+  font-min-size: 1vw;
+  font-family: monospace;
 }
 
-#selectedSong {
-  background-color: aquamarine;
+select  {
+  outline: 0;
+  overflow: hidden;
+  max-height: 10vw;
+  min-height: 3vw;
+  background: #2c343c;
+  color: white;
+  border: #2c343c;
+  padding: 5px 3px 5px 10px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 10px;
+}
+
+select option {
+  border: 1px solid #000; background: #010;
 }
