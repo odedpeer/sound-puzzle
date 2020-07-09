@@ -2,9 +2,100 @@ let selection = [];
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let source;
 let numberOfSplits = 8;
+let songPrefix = "sunscreen";
+let splitarrays = {};
+const songs = {
+  sunscreen: "Everybody's Free To Wear Sunscreen",
+  "queen-dont-stop-me-now": "Don't Stop Me Now",
+  "matanot-ktanot": "מתנות קטנות",
+};
+let timer;
+let seconds = 0;
+
+async function init() {
+  clearInterval(timer);
+  seconds = 0;
+  document.getElementById("timer").innerText = seconds;
+  timer = setInterval(() => {
+    seconds += 1;
+    document.getElementById("timer").innerText = seconds;
+  }, 1000);
+
+  document.getElementById("selectedSong").innerText = songs[songPrefix];
+  splitarrays = {};
+  selection = [];
+  const promises = [];
+  for (let i = 0; i < numberOfSplits; i++) {
+    promises.push(
+      fetchSplit(
+        `${songPrefix}-${i}.mp3`,
+        `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2F${songPrefix}-${i}.mp3`
+      )
+    );
+  }
+  await Promise.all(promises);
+
+  let allWaves = "";
+  for (let i = 0; i < numberOfSplits; i++) {
+    allWaves += `<div><img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2F${songPrefix}-${i}.png"
+                class="wav-tile"
+               ></div>`;
+  }
+  document.getElementById("drawall").innerHTML = allWaves;
+
+  let droppoints = "";
+  for (let i = 0; i < numberOfSplits; i++) {
+    droppoints += `
+        <div
+          id="selection${i}"
+          class="droppoint"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+        `;
+  }
+  document.getElementById("playlist").innerHTML = droppoints;
+
+  let splits = "";
+  // shuffle splits
+  let indexes = [];
+  for (let i = 0; i < numberOfSplits; i++) {
+    indexes.push(i);
+  }
+  let shuffle = [];
+  for (let i = 0; i < numberOfSplits; i++) {
+    shuffle.push(indexes.splice(Math.random() * indexes.length, 1)[0]);
+  }
+  for (let i = 0; i < numberOfSplits; i++) {
+    const index = shuffle[i];
+    splits += `
+      <div class="splitsLoc">
+        <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
+          <div>
+            <img
+            draggable="false"
+            src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2F${songPrefix}-${index}.png"
+            >
+          </div>
+          <div>
+            <button onclick="playSplit(${index})"><span class="hint">${index}</span> &rtri;</button>
+          </div>
+        </div>
+      </div>
+        `;
+  }
+  document.getElementById("splits").innerHTML = splits;
+}
 
 function canDrop(ev) {
-  return ev.target.className === "droppoint" || ev.target.id === "splits";
+  return (
+    ev.target.className === "droppoint" || ev.target.className === "splitsLoc"
+  );
+}
+
+async function selectSong(e) {
+  songPrefix = e.value;
+  await init();
 }
 
 function allowDrop(ev) {
@@ -23,7 +114,9 @@ function verifyWinning() {
       return;
     }
   }
-  document.getElementById("announcement").innerText = "You Won!";
+  clearInterval(timer);
+  confetti.start();
+  setTimeout(() => confetti.stop(), 5000);
 }
 
 function drop(ev) {
@@ -48,10 +141,6 @@ function drop(ev) {
 }
 
 async function stop() {
-  const player = document.getElementById("player");
-  player.pause();
-  player.currentTime = 0;
-
   if (source) {
     await source.stop();
   }
@@ -93,19 +182,38 @@ function concatBuffer(_buffers) {
   return tmp;
 }
 
-function playSplit(index) {
-  stop();
+async function playAll() {
+  await stop();
+
+  source = audioCtx.createBufferSource();
+
+  const splitsToPlay = [];
+  for (let i = 0; i < numberOfSplits; i++) {
+    splitsToPlay.push(`${songPrefix}-${i}.mp3`);
+  }
+
+  return Promise.all(splitsToPlay.map((splitName) => splitarrays[splitName]))
+    .then(concatBuffer)
+    .then((decodedData) => {
+      source.buffer = decodedData;
+      source.connect(audioCtx.destination);
+      source.start();
+    });
+}
+
+async function playSplit(index) {
+  await stop();
   source = audioCtx.createBufferSource();
 
   const splitsToPlay = [];
   const splitsToPlayIndexes = [];
   for (let i = 0; i < selection.length; i++) {
     if (selection[i] === index.toString()) {
-      splitsToPlay.push(`sunscreen-${selection[i]}.mp3`);
+      splitsToPlay.push(`${songPrefix}-${selection[i]}.mp3`);
       splitsToPlayIndexes.push(selection[i]);
       for (let j = i + 1; j < selection.length; j++) {
         if (selection[j]) {
-          splitsToPlay.push(`sunscreen-${selection[j]}.mp3`);
+          splitsToPlay.push(`${songPrefix}-${selection[j]}.mp3`);
           splitsToPlayIndexes.push(selection[j]);
         } else {
           break;
@@ -116,7 +224,7 @@ function playSplit(index) {
   }
 
   if (splitsToPlay.length === 0) {
-    splitsToPlay.push(`sunscreen-${index}.mp3`);
+    splitsToPlay.push(`${songPrefix}-${index}.mp3`);
     splitsToPlayIndexes.push(index);
   }
 
@@ -159,14 +267,6 @@ function fetchSplit(splitName, url) {
     .then((arr) => (splitarrays[splitName] = arr));
 }
 
-const splitarrays = {};
-for (let i = 0; i < numberOfSplits; i++) {
-  fetchSplit(
-    `sunscreen-${i}.mp3`,
-    `https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${i}.mp3?v=1592828177327`
-  );
-}
-
 function toggleBorder() {
   let tileElements = document.querySelectorAll(".wav-tile");
 
@@ -204,27 +304,7 @@ document.addEventListener(
 );
 
 document.addEventListener(
-  "touchstart",
-  function (event) {
-    // store a ref. on the dragged elem
-    const dragged = event.target;
-    // make it half transparent
-    event.target.style.opacity = 0.5;
-  },
-  false
-);
-
-document.addEventListener(
   "dragend",
-  function (event) {
-    // reset the transparency
-    event.target.style.opacity = "";
-  },
-  false
-);
-
-document.addEventListener(
-  "touchend",
   function (event) {
     // reset the transparency
     event.target.style.opacity = "";

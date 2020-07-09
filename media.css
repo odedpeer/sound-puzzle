@@ -34,13 +34,6 @@
   display: none;
 }
 
-#announcement {
-  margin-top: 2vh;
-  font-size: 4vh;
-  font-family: monospace;
-  color: brown;
-}
-
 .wav-tile {
   border-style: solid;
   border-width: 0px;
@@ -66,4 +59,12 @@ img {
 
 #playlist {
   min-height: 10vh;
+}
+
+.btn {
+  margin: 3px;
+}
+
+#selectedSong {
+  background-color: aquamarine;
 }

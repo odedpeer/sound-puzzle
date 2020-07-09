@@ -1,10 +1,12 @@
 <html>
   <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./media.css" rel="stylesheet" />
   </head>
-  <body class="pa2">
+  <body class="pa2" onload="init()">
     <script src="DragDropTouch.js"></script>
+    <script src="confetti.min.js"></script>
     <script src="./media.js"></script>
     <div class="reference pb2 bb">
       <h1>
@@ -15,23 +17,35 @@
         place
       </h3>
       <div>
-        <audio class="pr2" controls id="player">
-          <source
-            src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen.mp3?v=1592826506395"
-            type="audio/mp3"
-          />
-        </audio>
+        <h3 id="selectedSong"></h3>
+        <div><span>Time to solve: </span><span id="timer"></span></div>
+        <h4>Change song</h4>
+        <select name="song" onchange="selectSong(this)">
+          <script>
+            for (const song in songs) {
+              document.write(
+                `
+              <option value="${song}">${songs[song]}</option>
+              `
+              );
+            }
+          </script>
+        </select>
       </div>
-      <div class="grid-container">
-        <script>
-          for (let i = 0; i < numberOfSplits; i++) {
-            document.write(
-              `<div><img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${i}.png"
-                class="wav-tile"
-               ></div>`
-            );
-          }
-        </script>
+      <div class="grid-container" id="drawall"></div>
+      <div>
+        <input
+          class="btn"
+          type="button"
+          onclick="playAll()"
+          value="Play song &rtri;"
+        />
+        <input
+          class="btn"
+          type="button"
+          onclick="stop()"
+          value="Stop playing &FilledSmallSquare;"
+        />
       </div>
     </div>
 
@@ -39,72 +53,24 @@
       <h1>
         Solution
       </h1>
-      <div>
-        <button class="bg-blue" onclick="stop()">Stop</button>
-      </div>
-      <div class="grid-container pb2 bb" id="playlist">
-        <script>
-          for (let i = 0; i < numberOfSplits; i++) {
-            document.write(`
-        <div
-          id="selection${i}"
-          class="droppoint"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-        ></div>
-        `);
-          }
-        </script>
-      </div>
+      <div class="grid-container pb2 bb" id="playlist"></div>
     </div>
 
     <div class="parts">
       <h1>
         Parts
       </h1>
-      <div>
-        <button class="bg-blue" onclick="stop()">Stop</button>
-      </div>
       <div
         class="grid-container mt2 bg-light-green"
         id="splits"
         ondragover="allowDrop(event)"
         ondrop="drop(event)"
-      >
-        <script>
-          // shuffle splits
-          let indexes = [];
-          for (let i = 0; i < numberOfSplits; i++) {
-            indexes.push(i);
-          }
-          let shuffle = [];
-          for (let i = 0; i < numberOfSplits; i++) {
-            shuffle.push(indexes.splice(Math.random() * indexes.length, 1)[0]);
-          }
-          for (let i = 0; i < numberOfSplits; i++) {
-            const index = shuffle[i];
-            document.write(`
-        <div id="${index}" class="split" draggable="true" ondragstart="drag(event)">
-          <div>
-            <img
-            draggable="false"
-            src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsunscreen-${index}.png"
-            >
-          </div>
-          <div>
-            <button onclick="playSplit(${index})"><span class="hint">${index}</span> &rtri;</button>
-          </div>
-        </div>
-        `);
-          }
-        </script>
-      </div>
+      ></div>
     </div>
 
     <div class="hints">
       <button class="bg-green" onclick="toggleBorder()">Toggle Border</button>
       <button class="bg-green" onclick="toggleHint()">Toggle Hints</button>
     </div>
-    <div id="announcement"></div>
   </body>
 </html>

@@ -2,9 +2,10 @@ from pydub import AudioSegment
 from pydub.playback import play
 import scipy.io.wavfile
 import matplotlib.pyplot as plt
+import os
 
 def plot(dir, filename, num):
-    wav_filename = "%s/splits/%s-%d.%s" % (dir, filename, num, "wav")
+    wav_filename = "./%s-%d.%s" % (filename, num, "wav")
     png_filename = "%s-%d.%s" % (filename, num, "png")
     with open(wav_filename, 'wb') as out_f:
         split.export(out_f, format="wav")
@@ -21,9 +22,10 @@ def plot(dir, filename, num):
         plt.gca().yaxis.set_major_locator(plt.NullLocator())
         # export fig
         plt.savefig("%s-%d.%s" % (filename, num, "png"), bbox_inches='tight', pad_inches = 0)
+    os.remove(wav_filename)
 
 dir = "/Users/opeer/Downloads"
-filename = "sunscreen"
+filename = "matanot-ktanot"
 extension = "mp3"
 song = AudioSegment.from_mp3("%s/%s.%s" % (dir, filename, extension))
 
@@ -37,9 +39,9 @@ while (cur < song_length):
     splits.append(song[cur : cur + interval])
     cur += interval
 
-splits_to_save_start_index = 0
+splits_to_save_start_index = 2
 number_of_splits_to_save = 10
 for num, split in enumerate(splits[splits_to_save_start_index : splits_to_save_start_index + number_of_splits_to_save], start=0):
-    with open("%s/splits/%s-%d.%s" % (dir, filename, num, extension), 'wb') as out_f:
+    with open("./%s-%d.%s" % (filename, num, extension), 'wb') as out_f:
         split.export(out_f, format=extension)
     plot(dir, filename, num)
