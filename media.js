@@ -32,7 +32,11 @@ async function init() {
       )
     );
   }
-  await Promise.all(promises);
+  try {
+    await Promise.all(promises);
+  } catch (e) {
+    console.error(e);
+  }
 
   let allWaves = "";
   for (let i = 0; i < numberOfSplits; i++) {
@@ -262,7 +266,9 @@ function fetchSplit(splitName, url) {
       }
       return response.arrayBuffer();
     })
-    .then((buf) => audioCtx.decodeAudioData(buf))
+    .then((buf) => new Promise((resolve, reject) => {
+      audioCtx.decodeAudioData(buf, resolve, reject);
+    }))
     .then((arr) => (splitarrays[splitName] = arr));
 }
 
