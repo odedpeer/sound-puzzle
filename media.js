@@ -178,7 +178,7 @@ function concatBuffer(_buffers) {
     var dataIndex = 0;
 
     for (var c = 0; c < buflengh; c++) {
-      channel.set(_buffers[c].getChannelData(b), dataIndex);
+      channel.set(_buffers[c].getChannelData(b).slice(0, Math.min(channel.length - dataIndex, _buffers[c].getChannelData(b).length)), dataIndex);
       dataIndex += _buffers[c].length; // Next position where we should store the next buffer values
     }
   }
