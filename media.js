@@ -1,5 +1,6 @@
 let selection = [];
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+unmute(audioCtx);
 let source;
 let numberOfSplits = 8;
 let songPrefix = "sunscreen";
