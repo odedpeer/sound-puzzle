@@ -9,6 +9,7 @@ const songs = {
   sunscreen: "Everybody's Free To Wear Sunscreen",
   "queen-dont-stop-me-now": "Don't Stop Me Now",
   "matanot-ktanot": "מתנות קטנות",
+  "keep-in-touch": "Keep in Touch",
 };
 let timer;
 let seconds = 0;
