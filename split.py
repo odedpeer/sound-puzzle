@@ -25,12 +25,12 @@ def plot(dir, filename, num):
     os.remove(wav_filename)
 
 dir = "/Users/opeer/Downloads"
-filename = "matanot-ktanot"
+filename = "elvis-falling-in-love"
 extension = "mp3"
 song = AudioSegment.from_mp3("%s/%s.%s" % (dir, filename, extension))
 
 # split song
-interval = 3 * 1000
+interval = 2 * 1000
 cur = 0
 
 song_length = len(song)
@@ -39,7 +39,7 @@ while (cur < song_length):
     splits.append(song[cur : cur + interval])
     cur += interval
 
-splits_to_save_start_index = 2
+splits_to_save_start_index = 4
 number_of_splits_to_save = 10
 for num, split in enumerate(splits[splits_to_save_start_index : splits_to_save_start_index + number_of_splits_to_save], start=0):
     with open("./%s-%d.%s" % (filename, num, extension), 'wb') as out_f:

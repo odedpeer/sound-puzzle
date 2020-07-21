@@ -10,38 +10,36 @@
     <script src="unmute.min.js"></script>
     <script src="./media.js"></script>
     <div class="reference pb2 bb">
-      <h1>
-        Sound Puzzle
-      </h1>
+      <div>
+        <h1>
+          Sound Puzzle
+        </h1>
+        <img src="https://cdn.glitch.com/3f6d5ca6-f448-40f4-882f-44a736d1d4ce%2Fsound-jigsaw.png?v=1595231550809" id="jigsawimg">
+      </div>
       <h3>
         Listen to the sound bites and arrange in order by dragging them into
         place
       </h3>
       <div>
         <div><span>Time to solve: </span><span id="timer"></span></div>
-        <select name="song" onchange="selectSong(this)">
-          <script>
-            for (const song in songs) {
-              document.write(
-                `
+        <div>
+          <select name="song" onchange="selectSong(this)">
+            <script>
+              for (const song in songs) {
+                document.write(
+                  `
               <option value="${song}">${songs[song]}</option>
               `
-              );
-            }
-          </script>
-        </select>
-        <input
-          class="btn"
-          type="button"
-          onclick="playAll()"
-          value="&rtri;"
-        />
-        <input
-          class="btn"
-          type="button"
-          onclick="stop()"
-          value="&FilledSmallSquare;"
-        />
+                );
+              }
+            </script>
+          </select>
+        </div>
+        <div style="padding-top: 2vw;">
+          <h2>Play Song: <span id="playedSong"></span></h2>
+          <a href="" onclick="playAll(); return false;" class="button2">▶️</a>
+          <a href="" onclick="stop(); return false;" class="button2">⏹️</a>
+        </div>
       </div>
       <div class="grid-container" id="drawall"></div>
     </div>
@@ -66,8 +64,11 @@
     </div>
 
     <div class="hints">
-      <button class="btn" onclick="toggleBorder()">Toggle Border</button>
-      <button class="btn" onclick="toggleHint()">Toggle Hints</button>
+      <h2>
+        Hints
+      </h2>
+      <a href="" onclick="toggleBorder(); return false;" class="button3 lg">Toggle Border</a>
+      <a href="" onclick="toggleHint(); return false;" class="button3 lg">Toggle Hints</a>
     </div>
   </body>
 </html>

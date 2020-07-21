@@ -10,6 +10,8 @@ const songs = {
   "queen-dont-stop-me-now": "Don't Stop Me Now",
   "matanot-ktanot": "מתנות קטנות",
   "keep-in-touch": "Keep in Touch",
+  "ymca": "YMCA",
+  "elvis-falling-in-love": "Can't Help Falling In Love",
 };
 let timer;
 let seconds = 0;
@@ -18,6 +20,7 @@ async function init() {
   clearInterval(timer);
   seconds = 0;
   document.getElementById("timer").innerText = seconds;
+  document.getElementById("playedSong").innerText = songs[songPrefix];
   timer = setInterval(() => {
     seconds += 1;
     document.getElementById("timer").innerText = seconds;
@@ -83,7 +86,7 @@ async function init() {
             >
           </div>
           <div>
-            <button onclick="playSplit(${index})"><span class="hint">${index}</span> &rtri;</button>
+            <a href="" onclick="playSplit(${index}); return false;" class="button1"><span class="hint">${index + 1}</span> ▶️</a>
           </div>
         </div>
       </div>
@@ -147,7 +150,11 @@ function drop(ev) {
 
 async function stop() {
   if (source) {
-    await source.stop();
+    try {
+      await source.stop();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   resetAllSplitBackgrounds();
